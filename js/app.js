@@ -252,22 +252,33 @@ if (page.includes('admin-login')) {
 
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      // Wait for user data to load
-      const user = auth.currentUser;
-      const userData = await getUserData(user.uid);
-
-      // Auto-grant admin for hardcoded credentials
-      if (email === ADMIN_EMAIL) {
-        await db.ref('users/' + user.uid).update({ isAdmin: true });
-      }
-
-      if (userData && userData.isAdmin) {
-        window.location.href = 'index.html';
-      } else {
-        auth.signOut();
-        showMsg(errorEl, 'Access denied. Admin credentials required.');
-      }
     } catch (err) {
+      if (err.code === 'auth/user-not-found' && email === ADMIN_EMAIL && password === ADMIN_PASS) {
+        const cred = await auth.createUserWithEmailAndPassword(ADMIN_EMAIL, ADMIN_PASS);
+        await db.ref('users/' + cred.user.uid).set({
+          uid: cred.user.uid,
+          fullName: 'Super Admin',
+          email: ADMIN_EMAIL,
+          mobile: '',
+          balance: 0,
+          totalEarned: 0,
+          totalWithdrawn: 0,
+          membership: 'vip',
+          membershipExpiry: null,
+          referralCode: cred.user.uid.substring(0, 8),
+          referredBy: '',
+          referralCount: 0,
+          todayAds: 0,
+          lastAdDate: new Date().toDateString(),
+          totalAdsViewed: 0,
+          createdAt: firebase.database.ServerValue.TIMESTAMP,
+          isAdmin: true,
+          banned: false
+        });
+      } else {
+        throw err;
+      }
+    }
       let msg = err.message;
       if (err.code === 'auth/wrong-password') msg = 'Wrong password';
       else if (err.code === 'auth/user-not-found') msg = 'No admin account found with this email';
