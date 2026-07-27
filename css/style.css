@@ -315,6 +315,19 @@ footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--bor
 
 .auth-switch { text-align: center; margin-top: 24px; color: var(--text-muted); font-size: 14px; }
 .auth-switch a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+.admin-login-hint {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(247, 147, 26, 0.1);
+  border: 1px solid rgba(247, 147, 26, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.admin-login-hint strong { color: var(--primary); }
+
 .back-link { display: block; text-align: center; margin-top: 16px; color: var(--text-muted); text-decoration: none; font-size: 14px; }
 .back-link:hover { color: var(--primary); }
 

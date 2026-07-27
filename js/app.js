@@ -1,6 +1,7 @@
 ﻿// ========== FIREBASE (from firebase-config.js) ==========
 
-// ========== CONFIG ==========
+const ADMIN_EMAIL = 'mdswampodsarkar@gmail.com';
+const ADMIN_PASS = '123456';
 const USD_TO_BDT = 100; // $1 = 100 BDT (withdrawal rate)
 let SITE_CONFIG = {
   freeRate: 0.01,
@@ -155,6 +156,8 @@ if (page.includes('login')) {
         const cred = await auth.createUserWithEmailAndPassword(email, password);
         const user = cred.user;
 
+const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
+
         const userData = {
           uid: user.uid, fullName, email, mobile,
           balance: 0, totalEarned: 0, totalWithdrawn: 0,
@@ -164,7 +167,7 @@ if (page.includes('login')) {
           lastAdDate: new Date().toDateString(),
           totalAdsViewed: 0,
           createdAt: firebase.database.ServerValue.TIMESTAMP,
-          isAdmin: false
+          isAdmin: isAdminUser
         };
 
         if (referralEmail) {
@@ -249,6 +252,11 @@ if (page.includes('dashboard')) {
       return;
     }
 
+    // Auto-admin for hardcoded credentials
+    if (user.email === ADMIN_EMAIL) {
+      await db.ref('users/' + user.uid).update({ isAdmin: true });
+    }
+
     if ($('userName')) $('userName').textContent = userData.fullName || 'User';
 
     db.ref('users/' + user.uid).on('value', (snap) => {
@@ -328,6 +336,10 @@ if (page.includes('earn')) {
       alert('Your account has been banned.');
       window.location.href = 'index.html';
       return;
+    }
+
+    if (user.email === ADMIN_EMAIL) {
+      await db.ref('users/' + user.uid).update({ isAdmin: true });
     }
 
     const dailyLimit = getDailyLimit(userData);
