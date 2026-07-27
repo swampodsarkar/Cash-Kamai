@@ -234,6 +234,59 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ========== ADMIN LOGIN ==========
+if (page.includes('admin-login')) {
+  loadConfig();
+
+  $('adminAuthForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = $('adminEmail').value.trim();
+    const password = $('adminPassword').value;
+    const errorEl = $('errorMsg');
+    hideMsg(errorEl);
+
+    if (password.length < 6) { showMsg(errorEl, 'Password must be at least 6 characters'); return; }
+
+    $('adminAuthBtn').disabled = true;
+    $('adminAuthBtn').textContent = 'Verifying...';
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      // Wait for user data to load
+      const user = auth.currentUser;
+      const userData = await getUserData(user.uid);
+
+      // Auto-grant admin for hardcoded credentials
+      if (email === ADMIN_EMAIL) {
+        await db.ref('users/' + user.uid).update({ isAdmin: true });
+      }
+
+      if (userData && userData.isAdmin) {
+        window.location.href = 'index.html';
+      } else {
+        auth.signOut();
+        showMsg(errorEl, 'Access denied. Admin credentials required.');
+      }
+    } catch (err) {
+      let msg = err.message;
+      if (err.code === 'auth/wrong-password') msg = 'Wrong password';
+      else if (err.code === 'auth/user-not-found') msg = 'No admin account found with this email';
+      else if (err.code === 'auth/invalid-email') msg = 'Invalid email';
+      showMsg(errorEl, msg);
+    }
+
+    $('adminAuthBtn').disabled = false;
+    $('adminAuthBtn').textContent = 'Admin Login';
+  });
+
+  auth.onAuthStateChanged((user) => {
+    if (user && page.includes('admin-login')) {
+      const hasAdmin = true; // Will be checked server-side, redirect to admin panel
+      window.location.href = 'index.html';
+    }
+  });
+}
+
 // ========== DASHBOARD ==========
 if (page.includes('dashboard')) {
   loadConfig();
@@ -570,14 +623,25 @@ if (page.includes('admin')) {
   loadConfig();
 
   auth.onAuthStateChanged(async (user) => {
-    if (!user) { window.location.href = '../login.html'; return; }
+    if (!user) { window.location.href = '../admin-login.html'; return; }
 
     const userData = await getUserData(user.uid);
     if (!userData || !userData.isAdmin) {
       alert('Admin access required!');
-      window.location.href = '../dashboard.html';
+      window.location.href = '../admin-login.html';
       return;
     }
+
+    // Auto-admin for hardcoded credentials
+    if (user.email === ADMIN_EMAIL) {
+      await db.ref('users/' + user.uid).update({ isAdmin: true });
+    }
+
+    // === LOAD CONTENT ===
+    const adminContent = $('adminContent');
+    const adminLoading = $('adminLoading');
+    if (adminContent) adminContent.style.display = 'block';
+    if (adminLoading) adminLoading.style.display = 'none';
 
     // === STATS ===
     const usersSnap = await db.ref('users').once('value');
