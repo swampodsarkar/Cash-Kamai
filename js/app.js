@@ -275,26 +275,26 @@ if (page.includes('admin-login')) {
           isAdmin: true,
           banned: false
         });
+        await auth.signInWithEmailAndPassword(ADMIN_EMAIL, ADMIN_PASS);
+      } else if (err.code === 'auth/wrong-password') {
+        showMsg(errorEl, 'Wrong password');
+        $('adminAuthBtn').disabled = false;
+        $('adminAuthBtn').textContent = 'Admin Login';
+        return;
+      } else if (err.code === 'auth/too-many-requests') {
+        showMsg(errorEl, 'Too many attempts! Try again later');
+        $('adminAuthBtn').disabled = false;
+        $('adminAuthBtn').textContent = 'Admin Login';
+        return;
       } else {
-        throw err;
+        showMsg(errorEl, err.message);
+        $('adminAuthBtn').disabled = false;
+        $('adminAuthBtn').textContent = 'Admin Login';
+        return;
       }
     }
-      let msg = err.message;
-      if (err.code === 'auth/wrong-password') msg = 'Wrong password';
-      else if (err.code === 'auth/user-not-found') msg = 'No admin account found with this email';
-      else if (err.code === 'auth/invalid-email') msg = 'Invalid email';
-      showMsg(errorEl, msg);
-    }
 
-    $('adminAuthBtn').disabled = false;
-    $('adminAuthBtn').textContent = 'Admin Login';
-  });
-
-  auth.onAuthStateChanged((user) => {
-    if (user && page.includes('admin-login')) {
-      const hasAdmin = true; // Will be checked server-side, redirect to admin panel
-      window.location.href = 'index.html';
-    }
+    window.location.href = 'index.html';
   });
 }
 
