@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Ads - Cash Kamai</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Cash Kamai</div>
+      <div class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="earn.html" class="active">Watch Ads</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="earn-container">
+    <div class="earn-header">
+      <h2>Watch Ads & Earn</h2>
+      <p>Earn <strong>$0.01 - $0.05</strong> per ad &bull; <strong>20 ads/day</strong> = $0.20/day free!</p>
+    </div>
+
+    <div class="daily-progress">
+      <div class="progress-info">
+        <span>Ads Today: <strong id="todayAdsCount">0</strong></span>
+        <span>Remaining: <strong id="remainingAdsCount">20</strong></span>
+        <span>Earned: <strong id="todayEarnedAmount">$0.00</strong></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div class="ad-container" id="adContainer">
+      <div class="ad-placeholder" id="adPlaceholder">
+        <div class="ad-icon">📢</div>
+        <h3>Ready to watch an ad?</h3>
+        <p>Click the button below — only 15 seconds required</p>
+        <button id="watchAdBtn" class="btn btn-primary btn-large">
+          Watch Ad
+        </button>
+      </div>
+    </div>
+
+    <div class="ad-history">
+      <h3>Today's Watched Ads</h3>
+      <div id="adHistoryList">
+        <p class="no-data">No ads watched today</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

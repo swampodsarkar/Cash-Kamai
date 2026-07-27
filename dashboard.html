@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Cash Kamai</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Cash Kamai</div>
+      <div class="nav-links">
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="earn.html">Watch Ads</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <div class="welcome-card">
+      <h2>Welcome, <span id="userName">User</span>!</h2>
+      <p>Today's earning: <strong id="todayEarning">$0.00</strong> &bull; 
+      Status: <strong id="userStatus">Free User</strong></p>
+    </div>
+
+    <div class="balance-cards">
+      <div class="balance-card">
+        <span class="balance-label">Current Balance</span>
+        <span class="balance-amount" id="balance">$0.00</span>
+      </div>
+      <div class="balance-card">
+        <span class="balance-label">Total Earned</span>
+        <span class="balance-amount" id="totalEarned">$0.00</span>
+      </div>
+      <div class="balance-card">
+        <span class="balance-label">Total Withdrawn</span>
+        <span class="balance-amount" id="totalWithdrawn">$0.00</span>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Ads Today</h3>
+        <span class="stat-value" id="todayAds">0</span>
+      </div>
+      <div class="stat-card">
+        <h3>Total Ads</h3>
+        <span class="stat-value" id="totalAds">0</span>
+      </div>
+      <div class="stat-card">
+        <h3>Ads Remaining</h3>
+        <span class="stat-value" id="remainingAds">20</span>
+      </div>
+      <div class="stat-card">
+        <h3>Referrals</h3>
+        <span class="stat-value" id="referrals">0</span>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <a href="earn.html" class="btn btn-primary btn-large">
+        Watch Ads & Earn Now
+      </a>
+    </div>
+
+    <div class="recent-section" style="margin-top:24px;">
+      <h3>🎁 Referral Program</h3>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Invite friends & earn <strong>$0.005</strong> per referral!</p>
+      <div class="referral-box" style="background:rgba(0,0,0,0.3);padding:20px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:16px;">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="referralLink" readonly style="flex:1;padding:12px 16px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:var(--radius-sm);color:#fff;font-size:14px;">
+          <button onclick="copyReferral()" class="btn btn-primary" style="white-space:nowrap;">📋 Copy Link</button>
+        </div>
+        <p style="color:var(--text-muted);font-size:12px;margin-top:10px;">Your referral code: <strong id="referralCode">-</strong></p>
+      </div>
+      <div class="referral-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
+        <div class="stat-card" style="text-align:center;">
+          <h3>Total Referrals</h3>
+          <span class="stat-value" id="referrals">0</span>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <h3>Referral Earnings</h3>
+          <span class="stat-value" id="referralEarnings">$0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-section">
+      <h3>Recent Transactions</h3>
+      <div id="recentTransactions">
+        <p class="no-data">No transactions yet</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

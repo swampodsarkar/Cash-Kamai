@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Kamai - Watch Ads & Earn Money Online</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Cash Kamai</div>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="login.html">Login</a>
+        <a href="login.html">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-coin">💰</div>
+      <h1>Watch Ads, Earn Dollars!<br>Get Paid via bKash/Nagad</h1>
+      <p>Earn $0.01 - $0.05 per ad view. That's up to <strong>$1.00/day</strong> free! No investment needed.</p>
+      <div class="hero-badges">
+        <span class="hero-badge">100% Free</span>
+        <span class="hero-badge">Instant Payment</span>
+        <span class="hero-badge">Bangladesh Friendly</span>
+        <span class="hero-badge">Mobile Ready</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="login.html" class="btn btn-primary btn-large animate-in">Start Earning Now</a>
+        <a href="#how-it-works" class="btn btn-outline btn-large animate-in animate-in-delay-1">How It Works?</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section">
+    <h2>How It Works?</h2>
+    <p class="section-subtitle">Start in 3 simple steps</p>
+    <div class="steps">
+      <div class="step animate-in">
+        <div class="step-icon">1</div>
+        <h3>Register</h3>
+        <p>Create your free account with name, email & mobile number — takes 1 minute!</p>
+      </div>
+      <div class="step animate-in animate-in-delay-1">
+        <div class="step-icon">2</div>
+        <h3>Watch Ads</h3>
+        <p>Watch 20-100 ads daily. Each ad takes only 15 seconds — easy & fast!</p>
+      </div>
+      <div class="step animate-in animate-in-delay-2">
+        <div class="step-icon">3</div>
+        <h3>Withdraw</h3>
+        <p>Minimum $0.50 withdrawal via bKash, Nagad or Rocket — processed within 24-48 hours!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stats-section">
+    <h2>Our Statistics</h2>
+    <p class="section-subtitle">Thousands of users are already earning</p>
+    <div class="stats">
+      <div class="stat animate-in">
+        <span class="stat-number" id="totalUsers">0</span>
+        <span class="stat-label">Total Users</span>
+      </div>
+      <div class="stat animate-in animate-in-delay-1">
+        <span class="stat-number" id="totalPaid">$0</span>
+        <span class="stat-label">Total Paid</span>
+      </div>
+      <div class="stat animate-in animate-in-delay-2">
+        <span class="stat-number" id="totalAds">0</span>
+        <span class="stat-label">Total Ads Watched</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section price-section">
+    <h2>Earning Rates</h2>
+    <p class="section-subtitle">Upgrade your membership to earn more</p>
+    <div class="price-table">
+      <div class="price-card animate-in">
+        <div class="price-card-icon">🆓</div>
+        <div class="price-amount">$0.01</div>
+        <div class="price-period">per ad</div>
+        <div class="price-label">Free User</div>
+        <ul>
+          <li>20 ads per day = <strong>$0.20/day</strong></li>
+          <li>Basic support</li>
+          <li>5% withdrawal fee</li>
+          <li>Withdraw via bKash/Nagad</li>
+        </ul>
+        <a href="login.html" class="btn btn-outline btn-full">Start Free</a>
+      </div>
+
+      <div class="price-card premium animate-in animate-in-delay-1">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-card-icon">⭐</div>
+        <div class="price-amount">$0.02</div>
+        <div class="price-period">per ad</div>
+        <div class="price-label">Premium (only $5/month)</div>
+        <ul>
+          <li>100 ads per day = <strong>$2.00/day</strong></li>
+          <li>2x earning rate</li>
+          <li>Priority support</li>
+          <li>Instant withdrawal</li>
+          <li>No withdrawal fee</li>
+        </ul>
+        <a href="login.html" class="btn btn-primary btn-full">Go Premium</a>
+      </div>
+
+      <div class="price-card animate-in animate-in-delay-2">
+        <div class="price-card-icon">👑</div>
+        <div class="price-amount">$0.05</div>
+        <div class="price-period">per ad</div>
+        <div class="price-label">VIP (only $10/month)</div>
+        <ul>
+          <li>Unlimited ads</li>
+          <li>5x earning rate</li>
+          <li>VIP badge</li>
+          <li>24/7 support</li>
+          <li>Lifetime bonus</li>
+        </ul>
+        <a href="login.html" class="btn btn-outline btn-full">Go VIP</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Why Choose Cash Kamai?</h2>
+    <p class="section-subtitle">The best PTC platform in Bangladesh</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+      <div class="step animate-in" style="text-align:left;padding:24px;">
+        <h3>Local Payment</h3>
+        <p>bKash, Nagad, Rocket — receive money directly to your account</p>
+      </div>
+      <div class="step animate-in animate-in-delay-1" style="text-align:left;padding:24px;">
+        <h3>Fast Payout</h3>
+        <p>24-48 hour processing — no hassle, no delays</p>
+      </div>
+      <div class="step animate-in animate-in-delay-2" style="text-align:left;padding:24px;">
+        <h3>Referral Bonus</h3>
+        <p>Earn $0.05 per referral — invite friends & earn!</p>
+      </div>
+      <div class="step animate-in animate-in-delay-3" style="text-align:left;padding:24px;">
+        <h3>Mobile Friendly</h3>
+        <p>Works on any device — mobile, tablet, desktop</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="text-align:center;padding-bottom:40px;">
+    <div class="glass" style="padding:48px;max-width:600px;margin:0 auto;">
+      <div style="font-size:48px;margin-bottom:16px;">🚀</div>
+      <h2 style="font-size:28px;margin-bottom:12px;">Start Today!</h2>
+      <p style="color:var(--text-muted);margin-bottom:24px;">First 100 users get $0.02 welcome bonus!<br>Don't wait, join now.</p>
+      <a href="login.html" class="btn btn-primary btn-large">Register Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Cash Kamai — Premium PTC Platform</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
