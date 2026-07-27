@@ -619,7 +619,7 @@ if (page.includes('withdraw')) {
 }
 
 // ========== ADMIN PANEL ==========
-if (page.includes('admin')) {
+if (page.includes('admin') && !page.includes('admin-login')) {
   loadConfig();
 
   auth.onAuthStateChanged(async (user) => {
