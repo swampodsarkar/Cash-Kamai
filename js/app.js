@@ -294,7 +294,7 @@ if (page.includes('admin-login')) {
       }
     }
 
-    window.location.href = 'index.html';
+    window.location.href = '../admin/index.html';
   });
 }
 
