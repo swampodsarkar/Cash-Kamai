@@ -52,6 +52,18 @@ function ic(name, size) { return S[name].replace('width="24"', 'width="' + (size
 function $(id) { return document.getElementById(id); }
 function showMsg(el, msg, persist) { el.innerHTML = msg; el.style.display = 'block'; if (!persist) setTimeout(() => el.style.display = 'none', 5000); }
 function hideMsg(el) { el.style.display = 'none'; }
+function faqToggle(btn) {
+  btn.classList.toggle('active');
+  const answer = btn.nextElementSibling;
+  answer.classList.toggle('show');
+  const iconSvg = btn.querySelector('.faq-icon svg');
+  if (iconSvg) {
+    const lines = iconSvg.querySelectorAll('line');
+    if (lines.length >= 2) {
+      lines[1].style.display = btn.classList.contains('active') ? 'none' : 'block';
+    }
+  }
+}
 
 function formatDate(ts) {
   if (!ts) return '';
@@ -109,6 +121,20 @@ const page = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') 
 // ========== LANDING PAGE ==========
 if (page.endsWith('index') || page === '') {
   loadConfig();
+
+  // Floating coins background
+  const heroEl = document.querySelector('.hero');
+  if (heroEl) {
+    for (let i = 0; i < 6; i++) {
+      const c = document.createElement('div');
+      c.className = 'floating-coin';
+      c.innerHTML = '<svg viewBox="0 0 24 24" width="' + (24 + Math.random() * 24) + '" height="' + (24 + Math.random() * 24) + '" fill="none" stroke="#f7931a" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>';
+      c.style.left = (5 + Math.random() * 90) + '%';
+      c.style.animationDuration = (15 + Math.random() * 20) + 's';
+      c.style.animationDelay = (Math.random() * 15) + 's';
+      heroEl.appendChild(c);
+    }
+  }
   db.ref('stats/global').on('value', (snap) => {
     if (snap.exists()) {
       const d = snap.val();
@@ -228,6 +254,17 @@ if (page.includes('login')) {
         const cred = await auth.createUserWithEmailAndPassword(email, password);
         const user = cred.user;
 
+        // Send verification email IMMEDIATELY after account creation
+        try {
+          const actionCodeSettings = {
+            url: window.location.origin + '/login.html',
+            handleCodeInApp: false
+          };
+          await user.sendEmailVerification(actionCodeSettings);
+        } catch (verErr) {
+          console.error('Verification email error:', verErr);
+        }
+
 const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
 
         const userData = {
@@ -275,15 +312,10 @@ const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
           totalUsers: firebase.database.ServerValue.increment(1)
         });
 
-        // Send email verification
-        try {
-          await user.sendEmailVerification();
-          showMsg($('successMsg') || errorEl, 'Registration successful! ' + ic('check', 16) + ' A verification link has been sent to your email. Please verify before logging in.', true);
-          auth.signOut();
-          switchAuthTab('login');
-        } catch (verErr) {
-          console.error('Verification email error:', verErr);
-        }
+        // Show success & sign out (verification email already sent above)
+        showMsg($('successMsg') || errorEl, 'Registration successful! ' + ic('check', 16) + ' A verification link has been sent to your email. Please verify before logging in.', true);
+        auth.signOut();
+        switchAuthTab('login');
       }
     } catch (err) {
       let msg = err.message;
@@ -309,15 +341,15 @@ const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
 }
 
 window.resendVerification = async function() {
-  if (auth.currentUser) {
-    try {
-      await auth.currentUser.sendEmailVerification();
-      alert('Verification email resent! Check your inbox.');
-    } catch (e) {
-      alert('Please try logging in first, then resend.');
-    }
-  } else {
-    alert('Please log in first to resend verification.');
+  const pass = prompt('Enter your password to resend verification email:');
+  if (!pass) return;
+  try {
+    const userCred = await auth.signInWithEmailAndPassword(window.resendVerificationEmail || '', pass);
+    await userCred.user.sendEmailVerification();
+    auth.signOut();
+    alert('Verification email resent! Check your inbox.');
+  } catch (e) {
+    alert('Error: ' + (e.code === 'auth/wrong-password' ? 'Wrong password' : e.message));
   }
 };
 
