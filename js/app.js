@@ -821,7 +821,7 @@ async function saveSettings() {
     freeRate: parseFloat($('settingFreeRate').value) || 0.01,
     premiumRate: parseFloat($('settingPremiumRate').value) || 0.02,
     dailyLimit: parseInt($('settingDailyLimit').value) || 10,
-    minWithdraw: parseInt($('settingMinWithdraw').value) || 0.50,
+    minWithdraw: parseFloat($('settingMinWithdraw').value) || 0.50,
     referralBonus: parseFloat($('settingReferralBonus').value) || 0.005
   };
   try {
