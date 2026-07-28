@@ -257,7 +257,7 @@ if (page.includes('login')) {
         // Send verification email IMMEDIATELY after account creation
         try {
           const actionCodeSettings = {
-            url: 'https://cash-kamai.vercel.app/auth-action.html?mode=verifyEmail',
+            url: 'https://cash-kamai.vercel.app/auth-action.html',
             handleCodeInApp: true
           };
           await user.sendEmailVerification(actionCodeSettings);
@@ -346,7 +346,7 @@ window.resendVerification = async function() {
   try {
     const userCred = await auth.signInWithEmailAndPassword(window.resendVerificationEmail || '', pass);
     await userCred.user.sendEmailVerification({
-      url: 'https://cash-kamai.vercel.app/auth-action.html?mode=verifyEmail',
+      url: 'https://cash-kamai.vercel.app/auth-action.html',
       handleCodeInApp: true
     });
     auth.signOut();
