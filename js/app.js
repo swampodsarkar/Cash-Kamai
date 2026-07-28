@@ -256,8 +256,9 @@ if (page.includes('login')) {
 
         // Send verification email IMMEDIATELY after account creation
         try {
+          const verifUrl = 'https://cash-kamai.vercel.app/login.html';
           const actionCodeSettings = {
-            url: window.location.origin + '/login.html',
+            url: verifUrl,
             handleCodeInApp: false
           };
           await user.sendEmailVerification(actionCodeSettings);
