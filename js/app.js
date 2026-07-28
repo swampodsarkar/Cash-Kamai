@@ -144,7 +144,7 @@ if (page.includes('login')) {
     try {
       if (currentAuthMode === 'login') {
         await auth.signInWithEmailAndPassword(email, password);
-        window.location.href = 'dashboard.html';
+        window.location.href = (email === ADMIN_EMAIL) ? 'admin/index.html' : 'dashboard.html';
       } else {
         const fullName = $('fullName').value.trim();
         const mobile = $('mobile').value.trim();
@@ -221,7 +221,7 @@ const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
 
   auth.onAuthStateChanged((user) => {
     if (user && page.includes('login')) {
-      window.location.href = 'dashboard.html';
+      window.location.href = (user.email === ADMIN_EMAIL) ? 'admin/index.html' : 'dashboard.html';
     }
   });
 }
