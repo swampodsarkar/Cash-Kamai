@@ -645,6 +645,80 @@ if (page.includes('withdraw')) {
   });
 }
 
+// ========== TASKS PAGE ==========
+if (page.includes('tasks')) {
+  loadConfig();
+
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) { window.location.href = 'login.html'; return; }
+
+    const userData = await getUserData(user.uid);
+    if (!userData || userData.banned) { auth.signOut(); window.location.href = 'index.html'; return; }
+
+    // Load completed tasks for this user
+    const completedSnap = await db.ref('userTasks/' + user.uid).once('value');
+    const completed = {};
+    if (completedSnap.exists()) {
+      completedSnap.forEach((child) => { completed[child.key] = child.val(); });
+    }
+
+    const taskDone = Object.keys(completed).length;
+    const taskEarned = (userData.taskEarnings || 0);
+    if ($('tasksDone')) $('tasksDone').textContent = taskDone;
+    if ($('taskEarnings')) $('taskEarnings').textContent = fmt$(taskEarned);
+
+    // Load tasks from Firebase
+    const tasksSnap = await db.ref('tasks').once('value');
+    const container = $('tasksList');
+    if (!container) return;
+
+    if (!tasksSnap.exists()) {
+      container.innerHTML = '<p class="no-data">No tasks available yet. Check back soon!</p>';
+      return;
+    }
+
+    let html = '';
+    tasksSnap.forEach((child) => {
+      const t = child.val();
+      const taskId = child.key;
+      const done = completed[taskId];
+      html += '<div class="ad-container" style="' + (done ? 'border-color:rgba(76,175,80,0.3);' : '') + '">' +
+        '<div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;width:100%;">' +
+        '<div style="font-size:48px;flex-shrink:0;">' + (t.icon || '📋') + '</div>' +
+        '<div style="flex:1;min-width:200px;text-align:left;">' +
+        '<h3 style="font-size:18px;font-weight:700;margin-bottom:6px;">' + t.title + '</h3>' +
+        '<p style="color:var(--text-muted);font-size:14px;margin-bottom:8px;">' + t.description + '</p>' +
+        '<div style="display:inline-block;padding:4px 12px;background:rgba(76,175,80,0.15);border-radius:20px;color:#69f0ae;font-weight:700;font-size:14px;">+' + fmt$(t.reward || 0) + '</div>' +
+        '</div>' +
+        '<div style="flex-shrink:0;">' +
+        (done
+          ? '<span style="display:inline-block;padding:10px 20px;background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.3);border-radius:10px;color:#69f0ae;font-weight:600;font-size:14px;">✓ Completed</span>'
+          : '<button onclick="startTask(\'' + taskId + '\',\'' + t.link + '\',' + (t.reward || 0) + ')" class="btn btn-primary" style="padding:10px 24px;">Start Task</button>'
+        ) +
+        '</div></div></div>';
+    });
+    container.innerHTML = html;
+  });
+}
+
+window.startTask = async function(taskId, link, reward) {
+  const user = auth.currentUser;
+  if (!user) return;
+  if (link) window.open(link, '_blank');
+  if (!confirm('Did you complete the task? Click OK to verify and earn $' + (reward || 0).toFixed(2))) return;
+  try {
+    await db.ref('userTasks/' + user.uid + '/' + taskId).set(firebase.database.ServerValue.TIMESTAMP);
+    await db.ref('users/' + user.uid).update({
+      balance: firebase.database.ServerValue.increment(reward || 0),
+      totalEarned: firebase.database.ServerValue.increment(reward || 0),
+      taskEarnings: firebase.database.ServerValue.increment(reward || 0)
+    });
+    await addTransaction(user.uid, 'task_reward', reward || 0, 'Task completed');
+    alert('Congratulations! You earned ' + fmt$(reward || 0) + '!');
+    location.reload();
+  } catch (err) { alert('Error: ' + err.message); }
+};
+
 // ========== ADMIN PANEL ==========
 if (page.includes('admin') && !page.includes('admin-login')) {
   loadConfig();
@@ -708,6 +782,9 @@ if (page.includes('admin') && !page.includes('admin-login')) {
 
     // === LOAD NOTIFICATIONS ===
     if ($('notifList')) loadNotifList();
+
+    // === LOAD TASKS ===
+    if ($('tasksList')) loadAdminTasks();
   });
 
   // === PENDING WITHDRAWALS ===
@@ -789,6 +866,26 @@ if (page.includes('admin') && !page.includes('admin-login')) {
   }
 
   window.searchUsers = function() { loadAllUsers(); };
+
+  // === ADMIN TASKS LIST ===
+  async function loadAdminTasks() {
+    const snap = await db.ref('tasks').once('value');
+    const container = $('tasksList');
+    if (!container) return;
+    if (!snap.exists()) {
+      container.innerHTML = '<p class="no-data">No tasks added yet</p>';
+      return;
+    }
+    let html = '';
+    snap.forEach((child) => {
+      const t = child.val();
+      html += '<div class="tx-item">' +
+        '<div class="tx-info"><span class="tx-type">' + (t.icon || '📋') + ' ' + t.title + '</span>' +
+        '<span class="tx-date">' + fmt$(t.reward || 0) + ' | ' + (t.description || '') + '</span></div>' +
+        '<button onclick="deleteTask(\'' + child.key + '\')" class="btn btn-outline" style="padding:4px 10px;font-size:11px;">🗑️ Delete</button></div>';
+    });
+    container.innerHTML = html;
+  }
 
   // === NOTIFICATIONS LIST ===
   async function loadNotifList() {
@@ -900,3 +997,28 @@ function copyReferral() {
     alert('Referral link copied! 📋');
   }
 }
+
+// ========== TASK ADMIN FUNCTIONS ==========
+window.addTask = async function() {
+  const title = $('taskTitle').value.trim();
+  const description = $('taskDesc').value.trim();
+  const reward = parseFloat($('taskReward').value) || 0;
+  const link = $('taskLink').value.trim();
+  const icon = $('taskIcon').value;
+  if (!title || !description || reward <= 0) { alert('Please fill all required fields'); return; }
+  try {
+    await db.ref('tasks').push({ title, description, reward, link, icon, createdAt: firebase.database.ServerValue.TIMESTAMP });
+    $('taskTitle').value = ''; $('taskDesc').value = ''; $('taskLink').value = '';
+    alert('Task added! Users can now complete it.');
+    if ($('tasksList')) loadAdminTasks();
+  } catch (err) { alert('Error: ' + err.message); }
+};
+
+window.deleteTask = async function(taskId) {
+  if (!confirm('Delete this task?')) return;
+  try {
+    await db.ref('tasks/' + taskId).remove();
+    alert('Task deleted!');
+    if ($('tasksList')) loadAdminTasks();
+  } catch (err) { alert('Error: ' + err.message); }
+};

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <meta property="og:title" content="Complete Tasks & Earn - Cash Kamai">
+  <meta property="og:description" content="Complete simple tasks like following social media pages and earn money. Easy earnings!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cashkamai.netlify.app/tasks.html">
+  <meta property="og:image" content="https://cashkamai.netlify.app/favicon.ico">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Complete Tasks & Earn - Cash Kamai">
+  <meta name="twitter:description" content="Complete simple tasks like following social media pages and earn money. Easy earnings!">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks - Cash Kamai</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Cash Kamai</div>
+      <div class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="earn.html">Watch Ads</a>
+        <a href="tasks.html" class="active">Tasks</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="earn-container">
+    <div class="earn-header">
+      <h2>Complete Tasks & Earn</h2>
+      <p>Follow social pages, watch videos & earn <strong>extra cash</strong> instantly!</p>
+    </div>
+
+    <div class="task-summary" style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+      <div class="stat-card" style="flex:1;min-width:140px;">
+        <h3>Tasks Done</h3>
+        <span class="stat-value" id="tasksDone">0</span>
+      </div>
+      <div class="stat-card" style="flex:1;min-width:140px;">
+        <h3>Task Earnings</h3>
+        <span class="stat-value" id="taskEarnings">$0.00</span>
+      </div>
+    </div>
+
+    <div id="tasksList">
+      <p class="no-data">Loading tasks...</p>
+    </div>
+  </div>
+
+  <script src="js/anti-devtools.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
