@@ -372,6 +372,22 @@ if (page.includes('dashboard')) {
         }).join('');
       }
     }
+
+    // === LOAD NOTIFICATIONS ===
+    const notifSnap = await db.ref('notifications').orderByChild('createdAt').limitToLast(10).once('value');
+    const notifContainer = $('notificationsList');
+    if (notifContainer) {
+      if (!notifSnap.exists()) {
+        notifContainer.innerHTML = '<p class="no-data">No announcements</p>';
+      } else {
+        let items = [];
+        notifSnap.forEach((child) => { items.push(child.val()); });
+        items.reverse();
+        notifContainer.innerHTML = items.map(n =>
+          '<div class="tx-item"><div class="tx-info"><span class="tx-type">' + (n.title || 'Announcement') + '</span><span class="tx-date">' + formatDate(n.createdAt) + '</span><br><span style="font-size:13px;color:var(--text-muted);">' + n.message + '</span></div></div>'
+        ).join('');
+      }
+    }
   });
 }
 
@@ -689,6 +705,9 @@ if (page.includes('admin') && !page.includes('admin-login')) {
     // === LOAD AD LINK ===
     const adLinkSnap = await db.ref('config/adLink').once('value');
     if ($('settingAdUrl')) $('settingAdUrl').value = adLinkSnap.val() || '';
+
+    // === LOAD NOTIFICATIONS ===
+    if ($('notifList')) loadNotifList();
   });
 
   // === PENDING WITHDRAWALS ===
@@ -770,7 +789,41 @@ if (page.includes('admin') && !page.includes('admin-login')) {
   }
 
   window.searchUsers = function() { loadAllUsers(); };
+
+  // === NOTIFICATIONS LIST ===
+  async function loadNotifList() {
+    const snap = await db.ref('notifications').orderByChild('createdAt').limitToLast(20).once('value');
+    const container = $('notifList');
+    if (!container) return;
+    if (!snap.exists()) {
+      container.innerHTML = '<p class="no-data">No notifications sent yet</p>';
+      return;
+    }
+    let items = [];
+    snap.forEach((child) => { items.push({ key: child.key, val: child.val() }); });
+    items.reverse();
+    container.innerHTML = items.map(({ key, val: n }) =>
+      '<div class="tx-item"><div class="tx-info"><span class="tx-type">' + (n.title || 'Notification') + '</span><span class="tx-date">' + formatDate(n.createdAt) + '</span><br><span style="font-size:13px;color:var(--text-muted);">' + n.message + '</span></div></div>'
+    ).join('');
+  }
 }
+
+window.sendNotification = async function() {
+  const title = $('notifTitle').value.trim();
+  const message = $('notifMessage').value.trim();
+  if (!message) { alert('Please enter a message'); return; }
+  try {
+    await db.ref('notifications').push({
+      title: title || 'Announcement',
+      message,
+      createdAt: firebase.database.ServerValue.TIMESTAMP
+    });
+    $('notifTitle').value = '';
+    $('notifMessage').value = '';
+    alert('Notification sent to all users!');
+    if ($('notifList')) loadNotifList();
+  } catch (err) { alert('Error: ' + err.message); }
+};
 
 // ========== GLOBAL ADMIN FUNCTIONS ==========
 async function approveWithdraw(withdrawId, userId, amount) {

@@ -80,6 +80,26 @@
       </div>
 
       <div class="admin-section">
+        <h3>Send Notification</h3>
+        <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">Send a message to all users (appears on their dashboard).</p>
+        <div class="admin-settings">
+          <div class="setting-item">
+            <label>Notification Title</label>
+            <input type="text" id="notifTitle" placeholder="e.g. New Update!">
+          </div>
+          <div class="setting-item">
+            <label>Notification Message</label>
+            <textarea id="notifMessage" rows="3" style="width:100%;padding:12px 16px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:var(--radius-sm);color:#fff;font-size:15px;font-family:inherit;resize:vertical;" placeholder="Write your message..."></textarea>
+          </div>
+          <button onclick="sendNotification()" class="btn btn-primary btn-full">Send Notification</button>
+        </div>
+        <div style="margin-top:16px;">
+          <h4 style="margin-bottom:12px;color:var(--text-muted);font-size:14px;">Previous Notifications</h4>
+          <div id="notifList"><p class="no-data">No notifications sent yet</p></div>
+        </div>
+      </div>
+
+      <div class="admin-section">
         <h3>Ad Link Settings</h3>
         <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">Users are redirected to this URL when watching ads.</p>
         <div class="admin-settings">
@@ -120,6 +140,7 @@
     </div>
   </div>
 
+  <script src="../js/anti-devtools.js"></script>
   <script src="../js/app.js"></script>
 </body>
 </html>
