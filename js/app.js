@@ -255,14 +255,17 @@ if (page.includes('login')) {
         const user = cred.user;
 
         // Send verification email IMMEDIATELY after account creation
+        let emailSent = false;
         try {
           const actionCodeSettings = {
             url: 'https://cash-kamai.vercel.app/login.html',
             handleCodeInApp: false
           };
           await user.sendEmailVerification(actionCodeSettings);
+          emailSent = true;
         } catch (verErr) {
           console.error('Verification email error:', verErr);
+          showMsg(errorEl, 'Registration done! But verification email failed to send: ' + verErr.message + '. You can resend from login page.', true);
         }
 
 const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
@@ -312,8 +315,10 @@ const isAdminUser = (email === ADMIN_EMAIL && password === ADMIN_PASS);
           totalUsers: firebase.database.ServerValue.increment(1)
         });
 
-        // Show success & sign out (verification email already sent above)
-        showMsg($('successMsg') || errorEl, 'Registration successful! ' + ic('check', 16) + ' A verification link has been sent to your email. Please verify before logging in.', true);
+        // Show success & sign out
+        if (emailSent) {
+          showMsg($('successMsg') || errorEl, 'Registration successful! ' + ic('check', 16) + ' A verification link has been sent to your email. Please verify before logging in.', true);
+        }
         auth.signOut();
         switchAuthTab('login');
       }
