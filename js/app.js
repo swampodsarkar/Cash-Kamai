@@ -146,13 +146,16 @@ if (page.includes('login')) {
   const refCode = new URLSearchParams(window.location.search).get('ref');
   if (refCode && $('refField')) {
     $('refField').style.display = 'block';
-    const refSnap = await db.ref('users').orderByChild('referralCode').equalTo(refCode).limitToFirst(1).once('value');
-    if (refSnap.exists()) {
-      refSnap.forEach((child) => {
-        if ($('referral')) $('referral').value = child.val().email || '';
-      });
-    }
-    // Auto-switch to register tab if ref code present
+    (async () => {
+      try {
+        const refSnap = await db.ref('users').orderByChild('referralCode').equalTo(refCode).limitToFirst(1).once('value');
+        if (refSnap.exists()) {
+          refSnap.forEach((child) => {
+            if ($('referral')) $('referral').value = child.val().email || '';
+          });
+        }
+      } catch (e) {}
+    })();
     switchAuthTab('register');
   }
 
