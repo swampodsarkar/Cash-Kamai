@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cashkamai.netlify.app/sitemap.xml

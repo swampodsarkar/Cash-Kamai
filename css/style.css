@@ -489,6 +489,111 @@ footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--bor
 .withdraw-request { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--border); gap: 16px; }
 .user-row { display: flex; justify-content: space-between; align-items: center; padding: 14px; border-bottom: 1px solid var(--border); gap: 16px; }
 
+/* ========== TRUST BADGES ========== */
+.trust-badge {
+  padding: 8px 18px; border-radius: 20px;
+  background: rgba(247,147,26,0.08); border: 1px solid rgba(247,147,26,0.15);
+  font-size: 13px; color: var(--text); font-weight: 500;
+  transition: var(--transition);
+}
+.trust-badge:hover { background: rgba(247,147,26,0.15); transform: translateY(-2px); }
+
+/* ========== HERO COUNTDOWN ========== */
+.hero-countdown {
+  display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center;
+  padding: 10px 20px; margin-bottom: 24px;
+  background: rgba(247,147,26,0.1); border: 1px solid rgba(247,147,26,0.2);
+  border-radius: 12px; font-size: 14px; color: var(--text);
+  animation: pulse 2s ease-in-out infinite;
+}
+.hero-countdown strong { color: var(--primary); font-size: 16px; font-family: monospace; letter-spacing: 2px; }
+
+/* ========== TESTIMONIALS ========== */
+.testimonial-section { background: rgba(247,147,26,0.02); }
+.testimonials { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.testimonial-card {
+  flex: 1; min-width: 260px; max-width: 340px; padding: 28px 24px;
+  background: var(--bg-card); backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: var(--transition); position: relative;
+}
+.testimonial-card:hover { transform: translateY(-6px); border-color: var(--border-hover); box-shadow: var(--shadow-lg); }
+.testimonial-stars { font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
+.testimonial-card p { font-size: 14px; color: var(--text); line-height: 1.7; font-style: italic; margin-bottom: 12px; }
+.testimonial-author { font-size: 13px; color: var(--primary); font-weight: 600; }
+
+/* ========== FAQ ========== */
+.faq-section { max-width: 700px; margin: 0 auto; }
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.faq-question {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; background: var(--bg-card); border: none;
+  color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: var(--transition); text-align: left;
+}
+.faq-question:hover { background: var(--bg-card-hover); }
+.faq-question.active { background: rgba(247,147,26,0.08); }
+.faq-icon { font-size: 20px; font-weight: 700; transition: transform 0.3s; color: var(--primary); }
+.faq-question.active .faq-icon { transform: rotate(45deg); }
+.faq-answer {
+  padding: 0 20px; max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: rgba(0,0,0,0.15); color: var(--text-muted); font-size: 14px; line-height: 1.7;
+}
+.faq-answer.show { max-height: 200px; padding: 16px 20px; }
+
+/* ========== SHARE BUTTONS ========== */
+.share-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.share-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  transition: var(--transition);
+}
+.share-btn:hover { transform: translateY(-2px); }
+.share-fb { background: rgba(24,119,242,0.15); border: 1px solid rgba(24,119,242,0.3); color: #1877f2; }
+.share-tw { background: rgba(29,161,242,0.15); border: 1px solid rgba(29,161,242,0.3); color: #1da1f2; }
+.share-tg { background: rgba(0,136,204,0.15); border: 1px solid rgba(0,136,204,0.3); color: #0088cc; }
+.share-wa { background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.3); color: #25d366; }
+
+/* ========== LEADERBOARD ========== */
+.leaderboard-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px;
+}
+.leaderboard-item:last-child { border-bottom: none; }
+.leaderboard-rank { font-weight: 800; color: var(--primary); width: 30px; }
+.leaderboard-name { flex: 1; font-weight: 600; }
+.leaderboard-referrals { color: var(--text-muted); }
+
+/* ========== FOOTER ========== */
+footer { border-top: 1px solid var(--border); padding: 0; }
+.footer-content {
+  max-width: 1100px; margin: 0 auto; padding: 48px 24px 32px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px;
+}
+.footer-section h4 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+.footer-section p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+.footer-section a {
+  display: block; font-size: 14px; color: var(--text-muted); text-decoration: none;
+  padding: 4px 0; transition: var(--transition);
+}
+.footer-section a:hover { color: var(--primary); padding-left: 4px; }
+.footer-bottom { border-top: 1px solid var(--border); text-align: center; padding: 20px 24px; color: var(--text-muted); font-size: 13px; }
+
+/* ========== BLOG PREVIEW ========== */
+.blog-section { background: rgba(247,147,26,0.02); }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.blog-card {
+  padding: 28px 24px; background: var(--bg-card); backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition);
+}
+.blog-card:hover { transform: translateY(-6px); border-color: var(--border-hover); box-shadow: var(--shadow-lg); }
+.blog-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.blog-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+.blog-card .blog-link { font-size: 13px; color: var(--primary); font-weight: 600; text-decoration: none; }
+
 @media (max-width: 768px) {
   .nav-container { padding: 12px 16px; }
   .nav-links a { font-size: 12px; padding: 8px 12px; }

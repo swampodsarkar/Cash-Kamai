@@ -1,26 +1,49 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <meta property="og:title" content="Cash Kamai - Earn Money Watching Ads">
-  <meta property="og:description" content="Watch ads, earn dollars! Cash Kamai is the best PTC site in Bangladesh. Earn $0.01-$0.05 per ad view via bKash, Nagad, Rocket. Free to join!">
+  <meta name="description" content="Cash Kamai - Bangladesh er soto PTC site. Ads dekhe dollar uparjon koren, bKash/Nagad/Rocket a taka uthan. Free join, daily earn $1!">
+  <meta name="keywords" content="PTC Bangladesh, earn money online, ads dekhe income, bKash earn money, Cash Kamai, online earning BD">
+  <link rel="canonical" href="https://cashkamai.netlify.app/">
+  <meta property="og:title" content="Cash Kamai - Ads Dekhe Dollar Uparjon Korun">
+  <meta property="og:description" content="Bangladesh er soto PTC site. Ads dekhe $0.01-$0.05 uparjon. bKash, Nagad, Rocket a taka uthan. Free join!">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cashkamai.netlify.app/index.html">
-  <meta property="og:image" content="https://cashkamai.netlify.app/favicon.ico">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Cash Kamai - Earn Money Watching Ads">
-  <meta name="twitter:description" content="Watch ads, earn dollars! Cash Kamai is the best PTC site in Bangladesh. Earn $0.01-$0.05 per ad view via bKash, Nagad, Rocket. Free to join!">
+  <meta property="og:url" content="https://cashkamai.netlify.app/">
+  <meta property="og:image" content="https://cashkamai.netlify.app/apple-touch-icon.png">
+  <meta property="og:locale" content="bn_BD">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cash Kamai - Ads Dekhe Dollar Uparjon Korun">
+  <meta name="twitter:description" content="Bangladesh er soto PTC site. Ads dekhe $0.01-$0.05 uparjon. bKash, Nagad, Rocket a taka uthan!">
+  <meta name="twitter:image" content="https://cashkamai.netlify.app/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cash Kamai - Watch Ads & Earn Money Online</title>
+  <title>Cash Kamai - Ads Dekhe Dollar Earn Korun | Best PTC Site Bangladesh</title>
   <link rel="stylesheet" href="css/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2DPEL6DP5"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-E2DPEL6DP5');</script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
   <script src="js/firebase-config.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Cash Kamai",
+    "description": "Bangladesh er best PTC platform. Ads dekhe dollar uparjon korun, bKash/Nagad/Rocket a payment.",
+    "url": "https://cashkamai.netlify.app",
+    "brand": { "@type": "Brand", "name": "Cash Kamai" },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 </head>
 <body>
   <nav class="navbar">
@@ -37,46 +60,61 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-coin">💰</div>
-      <h1>Watch Ads, Earn Dollars!<br>Get Paid via bKash/Nagad</h1>
-      <p>Earn $0.01 - $0.05 per ad view. That's up to <strong>$1.00/day</strong> free! No investment needed.</p>
+      <h1>Ads Dekhe Dollar Earn Korun!<br>bKash / Nagad a Payment</h1>
+      <p>Earn <strong>$0.01 - $0.05</strong> per ad view. Daily earning up to <strong>$1.00</strong>!<br>Bangladesh er soto PTC site — 100% free, no investment!</p>
+      <div class="hero-countdown" id="heroCountdown">
+        <span>🔥 Limited: Welcome bonus available for </span>
+        <strong id="countdownTimer">--:--:--</strong>
+      </div>
       <div class="hero-badges">
         <span class="hero-badge">100% Free</span>
-        <span class="hero-badge">Instant Payment</span>
-        <span class="hero-badge">Bangladesh Friendly</span>
+        <span class="hero-badge">bKash/Nagad/Rocket</span>
+        <span class="hero-badge">24-48hr Payout</span>
         <span class="hero-badge">Mobile Ready</span>
       </div>
       <div class="hero-buttons">
-        <a href="login.html" class="btn btn-primary btn-large animate-in">Start Earning Now</a>
-        <a href="#how-it-works" class="btn btn-outline btn-large animate-in animate-in-delay-1">How It Works?</a>
+        <a href="login.html" class="btn btn-primary btn-large animate-in">Free Join Korun</a>
+        <a href="#how-it-works" class="btn btn-outline btn-large animate-in animate-in-delay-1">Kivabe Kaj Kore?</a>
       </div>
     </div>
   </section>
 
+  <section id="trust-badges" class="section" style="padding-top:0;padding-bottom:0;margin-top:-40px;">
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <span class="trust-badge">🔒 SSL Secure</span>
+      <span class="trust-badge">✅ Verified PTC</span>
+      <span class="trust-badge">🏦 bKash Partner</span>
+      <span class="trust-badge">📱 Nagad Ready</span>
+      <span class="trust-badge">🚀 Rocket Support</span>
+      <span class="trust-badge">👥 500+ Users</span>
+    </div>
+  </section>
+
   <section id="how-it-works" class="section">
-    <h2>How It Works?</h2>
-    <p class="section-subtitle">Start in 3 simple steps</p>
+    <h2>Kivabe Kaj Kore?</h2>
+    <p class="section-subtitle">Maatro 3 step a uparjon shuru korun</p>
     <div class="steps">
       <div class="step animate-in">
         <div class="step-icon">1</div>
         <h3>Register</h3>
-        <p>Create your free account with name, email & mobile number — takes 1 minute!</p>
+        <p>Free account khulun name, email & mobile diye — time lagbe maatro 1 minute!</p>
       </div>
       <div class="step animate-in animate-in-delay-1">
         <div class="step-icon">2</div>
-        <h3>Watch Ads</h3>
-        <p>Watch 20-100 ads daily. Each ad takes only 15 seconds — easy & fast!</p>
+        <h3>Ads Dekhun</h3>
+        <p>20-100 ads daily dekhun. Proti ad maatro 15 second — easy & fast!</p>
       </div>
       <div class="step animate-in animate-in-delay-2">
         <div class="step-icon">3</div>
-        <h3>Withdraw</h3>
-        <p>Minimum $0.50 withdrawal via bKash, Nagad or Rocket — processed within 24-48 hours!</p>
+        <h3>Taka Uthan</h3>
+        <p>Minimum $0.50 withdrawal. bKash, Nagad ba Rocket a payment — 24-48 hours er moddhe!</p>
       </div>
     </div>
   </section>
 
   <section class="section stats-section">
-    <h2>Our Statistics</h2>
-    <p class="section-subtitle">Thousands of users are already earning</p>
+    <h2>Amader Porishonkhya</h2>
+    <p class="section-subtitle">Hazar hajar user uparjon korche amader sathe</p>
     <div class="stats">
       <div class="stat animate-in">
         <span class="stat-number" id="totalUsers">0</span>
@@ -95,43 +133,43 @@
 
   <section class="section price-section">
     <h2>Earning Rates</h2>
-    <p class="section-subtitle">Upgrade your membership to earn more</p>
+    <p class="section-subtitle">Membership upgrade korle aro beshi earn korte parben</p>
     <div class="price-table">
       <div class="price-card animate-in">
         <div class="price-card-icon">🆓</div>
         <div class="price-amount">$0.01</div>
-        <div class="price-period">per ad</div>
+        <div class="price-period">protiti ad e</div>
         <div class="price-label">Free User</div>
         <ul>
-          <li>20 ads per day = <strong>$0.20/day</strong></li>
+          <li>20 ads daily = <strong>$0.20/day</strong></li>
           <li>Basic support</li>
           <li>5% withdrawal fee</li>
-          <li>Withdraw via bKash/Nagad</li>
+          <li>bKash/Nagad/Rocket</li>
         </ul>
-        <a href="login.html" class="btn btn-outline btn-full">Start Free</a>
+        <a href="login.html" class="btn btn-outline btn-full">Free Join</a>
       </div>
 
       <div class="price-card premium animate-in animate-in-delay-1">
         <div class="price-badge">Most Popular</div>
         <div class="price-card-icon">⭐</div>
         <div class="price-amount">$0.02</div>
-        <div class="price-period">per ad</div>
-        <div class="price-label">Premium (only $5/month)</div>
+        <div class="price-period">protiti ad e</div>
+        <div class="price-label">Premium ($5/month)</div>
         <ul>
-          <li>100 ads per day = <strong>$2.00/day</strong></li>
+          <li>100 ads daily = <strong>$2.00/day</strong></li>
           <li>2x earning rate</li>
           <li>Priority support</li>
           <li>Instant withdrawal</li>
           <li>No withdrawal fee</li>
         </ul>
-        <a href="login.html" class="btn btn-primary btn-full">Go Premium</a>
+        <a href="login.html" class="btn btn-primary btn-full">Upgrade Now</a>
       </div>
 
       <div class="price-card animate-in animate-in-delay-2">
         <div class="price-card-icon">👑</div>
         <div class="price-amount">$0.05</div>
-        <div class="price-period">per ad</div>
-        <div class="price-label">VIP (only $10/month)</div>
+        <div class="price-period">protiti ad e</div>
+        <div class="price-label">VIP ($10/month)</div>
         <ul>
           <li>Unlimited ads</li>
           <li>5x earning rate</li>
@@ -145,24 +183,88 @@
   </section>
 
   <section class="section">
-    <h2>Why Choose Cash Kamai?</h2>
-    <p class="section-subtitle">The best PTC platform in Bangladesh</p>
+    <h2>Keno Cash Kamai?</h2>
+    <p class="section-subtitle">Bangladesh er best PTC platform</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
       <div class="step animate-in" style="text-align:left;padding:24px;">
         <h3>Local Payment</h3>
-        <p>bKash, Nagad, Rocket — receive money directly to your account</p>
+        <p>bKash, Nagad, Rocket — directly account a taka receive korben</p>
       </div>
       <div class="step animate-in animate-in-delay-1" style="text-align:left;padding:24px;">
         <h3>Fast Payout</h3>
-        <p>24-48 hour processing — no hassle, no delays</p>
+        <p>24-48 hour processing — kono hassle, kono delay na</p>
       </div>
       <div class="step animate-in animate-in-delay-2" style="text-align:left;padding:24px;">
         <h3>Referral Bonus</h3>
-        <p>Earn $0.05 per referral — invite friends & earn!</p>
+        <p>Protiti referral e $0.05 uparjon — friends der invite korun!</p>
       </div>
       <div class="step animate-in animate-in-delay-3" style="text-align:left;padding:24px;">
         <h3>Mobile Friendly</h3>
-        <p>Works on any device — mobile, tablet, desktop</p>
+        <p>Jekono device e kaj kore — mobile, tablet, desktop</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section testimonial-section">
+    <h2>Amader Users Ki Bolche?</h2>
+    <p class="section-subtitle">500+ satisfied users</p>
+    <div class="testimonials">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p>"Sotti kotha, ads dekhe daily $0.50 earn korchi. bKash a payment paichi, thanks Cash Kamai!"</p>
+        <div class="testimonial-author">— Rafiq, Dhaka</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p>"First e valo laglo na, kintu actually kaj kore. 1 week a $2 earn kore nagad a taka uthaichi."</p>
+        <div class="testimonial-author">— Nasrin, Sylhet</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">⭐⭐⭐⭐</div>
+        <p>"Premium membership nilam, ekhon daily $1-2 earn korchi. So easy & fast payout."</p>
+        <div class="testimonial-author">— Karim, Chittagong</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <p class="section-subtitle">Ja ja janar dorkar</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.classList.toggle('active');this.nextElementSibling.classList.toggle('show')">
+          <span>Cash Kamai ki real?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Ha, Cash Kamai a 100% real PTC (Paid-To-Click) platform. Amra pay kori bKash, Nagad and Rocket te.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.classList.toggle('active');this.nextElementSibling.classList.toggle('show')">
+          <span>Koto taka earn kora jai?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Protiti ad e $0.01-$0.05. Daily 20-100 ads, mane $0.20-$5.00 per day earn kora jai.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.classList.toggle('active');this.nextElementSibling.classList.toggle('show')">
+          <span>Kivabe payment pabo?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">bKash, Nagad, Rocket — jekono ekta diye taka uthate parben. 24-48 hours er moddhe payment send kora hoi.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.classList.toggle('active');this.nextElementSibling.classList.toggle('show')">
+          <span>Minimum withdrawal koto?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Minimum withdrawal $0.50. Weekly 2 bar withdrawal kora jai.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.classList.toggle('active');this.nextElementSibling.classList.toggle('show')">
+          <span>Ki ki kaj kore earn kora jai?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Ads dekhbo, tasks complete korbo (Facebook like, YouTube video, Telegram join), and referral invite korbo.</div>
       </div>
     </div>
   </section>
@@ -170,14 +272,33 @@
   <section class="section" style="text-align:center;padding-bottom:40px;">
     <div class="glass" style="padding:48px;max-width:600px;margin:0 auto;">
       <div style="font-size:48px;margin-bottom:16px;">🚀</div>
-      <h2 style="font-size:28px;margin-bottom:12px;">Start Today!</h2>
-      <p style="color:var(--text-muted);margin-bottom:24px;">First 100 users get $0.02 welcome bonus!<br>Don't wait, join now.</p>
-      <a href="login.html" class="btn btn-primary btn-large">Register Now</a>
+      <h2 style="font-size:28px;margin-bottom:12px;">Aaj Theke Shuru Korun!</h2>
+      <p style="color:var(--text-muted);margin-bottom:24px;">First 500 users welcome bonus $0.02 paiben!<br>Dairyate join korun, taka uparjon shuru korun.</p>
+      <a href="login.html" class="btn btn-primary btn-large">Free Join Korun</a>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2026 Cash Kamai — Premium PTC Platform</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Cash Kamai</h4>
+        <p>Bangladesh er best PTC platform. Ads dekhe dollar uparjon korun, bKash/Nagad/Rocket a taka uthan.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="login.html">Login</a>
+        <a href="login.html">Register</a>
+        <a href="login.html">Start Earning</a>
+      </div>
+      <div class="footer-section">
+        <h4>Join Community</h4>
+        <a href="https://t.me/cashkamaiofficial" target="_blank" rel="noopener">📢 Telegram</a>
+        <a href="https://facebook.com/cashkamai" target="_blank" rel="noopener">📘 Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Cash Kamai — Premium PTC Platform. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="js/anti-devtools.js"></script>

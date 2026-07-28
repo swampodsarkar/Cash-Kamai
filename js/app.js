@@ -85,6 +85,19 @@ if (page.endsWith('index') || page === '') {
       if ($('totalAds')) $('totalAds').textContent = d.totalAds || 0;
     }
   });
+
+  // Countdown timer (24h from now)
+  const cdEnd = Date.now() + 86400000;
+  setInterval(() => {
+    const el = $('countdownTimer');
+    if (!el) return;
+    const left = cdEnd - Date.now();
+    if (left <= 0) { el.textContent = 'Expired'; return; }
+    const h = Math.floor(left / 3600000);
+    const m = Math.floor((left % 3600000) / 60000);
+    const s = Math.floor((left % 60000) / 1000);
+    el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }, 1000);
 }
 
 // ========== LOGIN / REGISTER ==========
@@ -128,6 +141,20 @@ function switchAuthTab(mode) {
 
 if (page.includes('login')) {
   loadConfig();
+
+  // Resolve referral code from URL (login.html?ref=CODE)
+  const refCode = new URLSearchParams(window.location.search).get('ref');
+  if (refCode && $('refField')) {
+    $('refField').style.display = 'block';
+    const refSnap = await db.ref('users').orderByChild('referralCode').equalTo(refCode).limitToFirst(1).once('value');
+    if (refSnap.exists()) {
+      refSnap.forEach((child) => {
+        if ($('referral')) $('referral').value = child.val().email || '';
+      });
+    }
+    // Auto-switch to register tab if ref code present
+    switchAuthTab('register');
+  }
 
   $('authForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -385,6 +412,30 @@ if (page.includes('dashboard')) {
         items.reverse();
         notifContainer.innerHTML = items.map(n =>
           '<div class="tx-item"><div class="tx-info"><span class="tx-type">' + (n.title || 'Announcement') + '</span><span class="tx-date">' + formatDate(n.createdAt) + '</span><br><span style="font-size:13px;color:var(--text-muted);">' + n.message + '</span></div></div>'
+        ).join('');
+      }
+    }
+
+    // === SOCIAL SHARE LINKS ===
+    const shareBase = window.location.origin + window.location.pathname.replace('dashboard.html', '') + 'login.html?ref=' + (userData.referralCode || '');
+    const shareText = encodeURIComponent('Join Cash Kamai and earn money watching ads! Get paid via bKash/Nagad. Sign up here: ');
+    if ($('shareFacebook')) $('shareFacebook').href = 'https://facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareBase);
+    if ($('shareTwitter')) $('shareTwitter').href = 'https://twitter.com/intent/tweet?text=' + shareText + '&url=' + encodeURIComponent(shareBase);
+    if ($('shareTelegram')) $('shareTelegram').href = 'https://t.me/share/url?url=' + encodeURIComponent(shareBase) + '&text=' + shareText;
+    if ($('shareWhatsApp')) $('shareWhatsApp').href = 'https://wa.me/?text=' + shareText + ' ' + encodeURIComponent(shareBase);
+
+    // === REFERRAL LEADERBOARD ===
+    const lbContainer = $('leaderboard');
+    if (lbContainer) {
+      const lbSnap = await db.ref('users').orderByChild('referralCount').limitToLast(10).once('value');
+      if (!lbSnap.exists() || lbSnap.numChildren() === 0) {
+        lbContainer.innerHTML = '<p class="no-data">No referrals yet. Be the first!</p>';
+      } else {
+        let lb = [];
+        lbSnap.forEach((child) => { lb.push(child.val()); });
+        lb.sort((a, b) => (b.referralCount || 0) - (a.referralCount || 0));
+        lbContainer.innerHTML = lb.map((u, i) =>
+          '<div class="leaderboard-item"><span class="leaderboard-rank">#' + (i + 1) + '</span><span class="leaderboard-name">' + (u.fullName || 'User') + '</span><span class="leaderboard-referrals">' + (u.referralCount || 0) + ' refs</span></div>'
         ).join('');
       }
     }
