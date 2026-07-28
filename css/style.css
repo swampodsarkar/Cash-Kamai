@@ -74,12 +74,8 @@ body::before {
   box-shadow: var(--shadow);
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 32px;
+svg.icon { display:inline-block; vertical-align:middle; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 32px;
   border-radius: var(--radius-sm);
   font-size: 15px;
   font-weight: 700;
