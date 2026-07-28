@@ -256,10 +256,9 @@ if (page.includes('login')) {
 
         // Send verification email IMMEDIATELY after account creation
         try {
-          const verifUrl = 'https://cash-kamai.vercel.app/login.html';
           const actionCodeSettings = {
-            url: verifUrl,
-            handleCodeInApp: false
+            url: 'https://cash-kamai.vercel.app/auth-action.html?mode=verifyEmail',
+            handleCodeInApp: true
           };
           await user.sendEmailVerification(actionCodeSettings);
         } catch (verErr) {
@@ -346,7 +345,10 @@ window.resendVerification = async function() {
   if (!pass) return;
   try {
     const userCred = await auth.signInWithEmailAndPassword(window.resendVerificationEmail || '', pass);
-    await userCred.user.sendEmailVerification();
+    await userCred.user.sendEmailVerification({
+      url: 'https://cash-kamai.vercel.app/auth-action.html?mode=verifyEmail',
+      handleCodeInApp: true
+    });
     auth.signOut();
     alert('Verification email resent! Check your inbox.');
   } catch (e) {
