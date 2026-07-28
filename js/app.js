@@ -707,7 +707,8 @@ if (page.includes('tasks')) {
     if (!user) { window.location.href = 'login.html'; return; }
 
     const userData = await getUserData(user.uid);
-    if (!userData || userData.banned) { auth.signOut(); window.location.href = 'index.html'; return; }
+    if (!userData) return;
+    if (userData.banned) { auth.signOut(); window.location.href = 'index.html'; return; }
 
     // Load completed tasks for this user
     const completedSnap = await db.ref('userTasks/' + user.uid).once('value');
